@@ -57,6 +57,7 @@
 }
 
 \newif\ifshmtu@degree@master
+\newif\ifshmtu@degree@bachelor
 \shmtu@validate@key{degree}
 
 \newif\ifshmtu@language@chinese
@@ -92,6 +93,9 @@
 % 根据学位导入相应的.ltx文件，可在此处导入制定一的样式文件
 \ifshmtu@degree@master
   \AtEndOfClass{\input{shmtuthesis-graduate.ltx}}
+\fi
+\ifshmtu@degree@bachelor
+  \AtEndOfClass{\input{shmtuthesis-undergraduate.ltx}}
 \fi
 
 % 依赖库
@@ -142,6 +146,8 @@
 \shmtu@def@term{enmajor}
 \shmtu@def@term{keywords}
 \shmtu@def@term{enkeywords}
+\shmtu@def@term{college}
+\shmtu@def@term{classname}
 
 \NewDocumentCommand\shmtuSetInfo{}{\setkeys{shmtuvalue}}
 

@@ -1,0 +1,172 @@
+%
+% 上海海事大学本科毕业论文（设计）LaTeX 模板样式文件
+%
+% Copyright (C) 2020-2020 by hellckt <hellckt@126.com>
+%           (C) 2026 modified for undergraduate use
+%
+% This file may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3c
+% of this license or (at your option) any later version.
+%
+
+\ProvidesFile{shmtuthesis-undergraduate.ltx}
+  [2026/04/21 0.1.0 Shanghai Maritime University Undergraduate Thesis Template]
+
+\shmtu@def@label{degreetypeChi}{本科}
+\shmtu@def@label{degreetypeEng}{Bachelor}
+
+\shmtu@def@label{thesistitle}{论文题目}
+\shmtu@def@label{college}{学院}
+\shmtu@def@label{major}{专业（方向）}
+\shmtu@def@label{classname}{班级}
+\shmtu@def@label{author}{姓名}
+\shmtu@def@label{supervisor}{指导教师}
+\shmtu@def@label{studentid}{学号}
+\shmtu@def@label{finisheddate}{完成日期}
+\def\shmtu@label@thesistype{毕业论文（设计）}
+\shmtu@def@label{subject}{%
+  \shmtu@label@schoolChi 毕业论文（设计）
+}
+
+% 纸张设置
+\geometry{%
+  paper      = a4paper,
+  top        = 2.7cm,
+  bottom     = 3.0cm,
+  left       = 3.0cm,
+  right      = 2.5cm,
+  headheight = 1.0cm,
+  headsep    = 0.5cm,
+}
+
+% 行距
+\renewcommand{\baselinestretch}{1.5}
+
+% 页眉、页脚设置
+\newcommand{\shmtu@fancyfoot}[2]{
+  \ifshmtu@review\relax\else
+    \ifx#2\@empty\else
+      \zihao{-5}{\bfseries #1}\\{#2}
+    \fi
+  \fi
+}
+\fancypagestyle{shmtu@title}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+\fancypagestyle{shmtu@plain}{%
+  \fancyhf{}
+  \fancyhead[C]{\zihao{-5}\shmtu@label@subject}
+  \fancyfoot[C]{\small ~{\thepage}~}
+}
+\renewcommand{\frontmatter}{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{Roman}
+  \pagestyle{shmtu@plain}
+}
+\renewcommand{\mainmatter}{%
+  \cleardoublepage
+  \@mainmattertrue
+  \shmtu@setfloatfonttrue
+  \pagenumbering{arabic}
+  \pagestyle{shmtu@plain}
+}
+\renewcommand{\backmatter}{%
+  \cleardoublepage
+  \@mainmatterfalse
+}
+
+\renewcommand{\cftchapfont}{\bfseries\heiti}
+\renewcommand{\cftchapleader}{\normalfont\cftdotfill{\cftdotsep}}
+
+% 中文摘要
+\NewDocumentEnvironment{abstract}{}{%
+  \cleardoublepage
+  \chapter*{%
+    \begingroup
+      \normalfont\zihao{3}\heiti\shmtu@label@abstractChi
+    \endgroup
+  }
+  \addcontentsline{toc}{chapter}{\shmtu@label@abstractChi}
+  \vskip 2ex
+  \@mkboth{\shmtu@label@abstractChi}%
+          {\shmtu@label@abstractChi}%
+  \zihao{-4}
+}{%
+  \vskip 3ex \noindent
+  \begingroup
+    \heiti\shmtu@label@keywordsChi
+  \endgroup
+  \begingroup
+    \shmtu@value@keywords
+  \endgroup
+}
+
+% 英文摘要（本科无末尾作者/导师信息）
+\NewDocumentEnvironment{enabstract}{}{%
+  \cleardoublepage
+  \chapter*{%
+    \bfseries
+    \begingroup
+      \MakeUppercase\shmtu@label@abstractEng
+    \endgroup
+  }
+  \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeUppercase{\shmtu@label@abstractEng}}{\shmtu@label@abstractEng}}
+  \vskip 2ex
+  \@mkboth{\shmtu@label@abstractEng}%
+          {\shmtu@label@abstractEng}%
+  \zihao{-4}
+}{%
+  \vskip 3ex \noindent
+  \begingroup
+    \bfseries\MakeUppercase
+    \shmtu@label@keywordsEng
+  \endgroup
+  \begingroup
+    \shmtu@value@enkeywords
+  \endgroup
+}
+\newcommand{\shmtu@bigabstract}[1]{\long\gdef\shmtu@bigabstract@body{#1}}
+\NewDocumentEnvironment{bigabstract}{}{%
+  \Collect@Body\shmtu@bigabstract
+}{%
+  \relax
+}
+
+% 封面页
+\RenewDocumentCommand\maketitle{}{%
+  \pdfbookmark[0]{\shmtu@label@titlepage}{titlepage}
+  \shmtu@maketitle%
+}
+\newcommand{\shmtu@maketitle}{%
+  \cleardoublepage
+  \thispagestyle{shmtu@title}
+  \begin{center}
+    \vspace*{20bp}
+    \includegraphics[width=0.65\textwidth]{images/shmtu-name}
+    \vskip \stretch{1}
+    {\zihao{-0}\bfseries\heiti 毕业论文（设计）}
+    \vskip \stretch{2}
+    \begingroup
+      \makebox[0.85\textwidth][c]{
+        \linespread{1.8}\selectfont\zihao{3}\kaishu
+        \begin{tabularx}{0.85\textwidth}
+          {>{\begin{CJKfilltwosides}[t]{6\ccwd}}r<{\end{CJKfilltwosides}：}
+            >{\centering\arraybackslash}X}
+          \shmtu@label@thesistitle   & \shmtu@uline{\shmtu@value@title}        \\
+          \shmtu@label@finisheddate  & \shmtu@uline{\shmtu@value@finisheddate} \\
+          \shmtu@label@college       & \shmtu@uline{\shmtu@value@college}      \\
+          \shmtu@label@major         & \shmtu@uline{\shmtu@value@major}        \\
+          \shmtu@label@classname     & \shmtu@uline{\shmtu@value@classname}    \\
+          \shmtu@label@author        & \shmtu@uline{\shmtu@value@author}       \\
+          \shmtu@label@studentid     & \shmtu@uline{\shmtu@value@studentid}    \\
+          \shmtu@label@supervisor    & \shmtu@uline{\shmtu@value@supervisor}   \\
+        \end{tabularx}
+      }
+    \endgroup
+    \vskip \stretch{1}
+  \end{center}
+  \cleardoublepage
+}
