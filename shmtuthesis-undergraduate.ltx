@@ -16,17 +16,23 @@
 \shmtu@def@label{degreetypeEng}{Bachelor}
 
 \shmtu@def@label{thesistitle}{论文题目}
-\shmtu@def@label{college}{学院}
-\shmtu@def@label{major}{专业（方向）}
-\shmtu@def@label{classname}{班级}
 \shmtu@def@label{author}{姓名}
+\shmtu@def@label{college}{学院}
+\shmtu@def@label{major}{专业}
+\shmtu@def@label{classname}{班级}
 \shmtu@def@label{supervisor}{指导教师}
-\shmtu@def@label{studentid}{学号}
-\shmtu@def@label{finisheddate}{完成日期}
-\def\shmtu@label@thesistype{毕业论文（设计）}
+\shmtu@def@label{finisheddate}{完成时间}
+\def\shmtu@label@thesistype{本科毕业论文（设计）}
 \shmtu@def@label{subject}{%
-  \shmtu@label@schoolChi 毕业论文（设计）
+  \shmtu@label@schoolChi 本科毕业论文（设计）
 }
+\shmtu@def@label{authtitle}{论文版权使用授权书}
+\shmtu@def@label{authbody}{%
+  本论文作者完全了解学校有关保留、使用论文的规定，即：学校有权
+  保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被
+  查阅和借阅。本人授权上海海事大学可以将本论文的全部或部分内容编
+  入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存和
+  汇编本论文。}
 
 % 纸张设置
 \geometry{%
@@ -146,27 +152,52 @@
   \begin{center}
     \vspace*{20bp}
     \includegraphics[width=0.65\textwidth]{images/shmtu-name}
-    \vskip \stretch{1}
-    {\zihao{-0}\bfseries\heiti 毕业论文（设计）}
-    \vskip \stretch{2}
+    \vskip \stretch{0.5}
+    {\zihao{-0}\bfseries\songti 本科毕业论文（设计）}
+    \vskip \stretch{0.8}
+    \includegraphics[width=0.25\textwidth]{images/shmtu-badge}
+    \vskip \stretch{1.2}
     \begingroup
-      \makebox[0.85\textwidth][c]{
-        \linespread{1.8}\selectfont\zihao{3}\kaishu
-        \begin{tabularx}{0.85\textwidth}
-          {>{\begin{CJKfilltwosides}[t]{6\ccwd}}r<{\end{CJKfilltwosides}：}
+      \makebox[0.75\textwidth][c]{
+        \linespread{2.0}\selectfont\zihao{3}\songti
+        \begin{tabularx}{0.75\textwidth}
+          {>{\begin{CJKfilltwosides}[t]{4\ccwd}}r<{\end{CJKfilltwosides}：}
             >{\centering\arraybackslash}X}
           \shmtu@label@thesistitle   & \shmtu@uline{\shmtu@value@title}        \\
-          \shmtu@label@finisheddate  & \shmtu@uline{\shmtu@value@finisheddate} \\
+          \shmtu@label@author        & \shmtu@uline{\shmtu@value@author}       \\
           \shmtu@label@college       & \shmtu@uline{\shmtu@value@college}      \\
           \shmtu@label@major         & \shmtu@uline{\shmtu@value@major}        \\
           \shmtu@label@classname     & \shmtu@uline{\shmtu@value@classname}    \\
-          \shmtu@label@author        & \shmtu@uline{\shmtu@value@author}       \\
-          \shmtu@label@studentid     & \shmtu@uline{\shmtu@value@studentid}    \\
           \shmtu@label@supervisor    & \shmtu@uline{\shmtu@value@supervisor}   \\
+          \shmtu@label@finisheddate  & \shmtu@uline{\shmtu@value@finisheddate} \\
         \end{tabularx}
       }
     \endgroup
-    \vskip \stretch{1}
+    \vskip \stretch{0.5}
   \end{center}
   \cleardoublepage
+}
+
+% 重写授权声明（本科版含保密选项）
+\RenewDocumentCommand{\makeDeclareAuthorization}{o}{%
+  \ifshmtu@review
+    \relax
+  \else
+    \pdfbookmark[0]{\shmtu@label@authtitle}{authtitle}
+    \IfNoValueTF{#1}{%
+      \thispagestyle{empty}
+      \vskip 16ex
+      {\let\clearpage\relax\par\chapter*{\normalfont\zihao{3}\songti\shmtu@label@authtitle}}
+      \begingroup
+        \zihao{4}
+        \shmtu@label@authbody
+        \vskip 1ex
+        \shmtu@authconf
+        \vskip 6ex
+        \noindent
+        \shmtu@signbox{导师}
+      \endgroup
+    }
+    {\includepdf[pagecommand={\thispagestyle{empty}}]{#1}}
+  \fi
 }
