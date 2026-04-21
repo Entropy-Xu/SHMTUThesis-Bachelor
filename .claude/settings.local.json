@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export PATH=\"/Library/TeX/texbin:$PATH\")",
+      "Bash(mkdir -p temp)",
+      "Bash(xelatex -interaction=nonstopmode -output-directory=temp main.tex)"
+    ]
+  }
+}
